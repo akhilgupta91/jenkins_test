@@ -18,6 +18,7 @@ node {
          sh "'${mvnHome}/bin/mvn' -f api-gateway/pom.xml -Dmaven.test.failure.ignore clean package"
       } else {
          bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
+         sh "echo "hi""
       }
    }
    stage('Results') {
