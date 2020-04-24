@@ -1,28 +1,25 @@
-node {
-    
-   def mvnHome
-   stage('Preparation') { // for display purposes
-      // Get some code from a GitHub repository
-      git credentialsId: 'github', url: 'git@github.com:akhilgupta91/jenkins_test.git'
-      // Get the Maven tool.
-      // ** NOTE: This 'M3' Maven tool must be configured
-      // **       in the global configuration.           
-      mvnHome = tool 'mvn3'
-      env.JAVA_HOME="${tool 'jdk8'}"
-      env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-      
-   }
-   stage('Build') {
-      // Run the maven build
-      if (isUnix()) {
-         sh "'${mvnHome}/bin/mvn' -f api-gateway/pom.xml -Dmaven.test.failure.ignore clean package"
-      } else {
-         bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore clean package/)
-         sh "echo "hi""
-      }
-   }
-   stage('Results') {
-      junit '**/api-gateway/target/surefire-reports/*.xml'
-      archiveArtifacts 'api-gateway/target/*.jar'
-   }
+pipeline {
+        agent any
+        options {
+                timestamps()
+                ansiColor("xterm")
+        }
+        stages {
+                stage("step1") {
+                        options {
+                                timeout(time: 1, unit: "MINUTES")
+                        }
+                        steps {
+                                sh 'printf "\\e[31mexecuting step1\\e[0m\\n"'
+                        }
+                }
+                stage("step2") {
+                        options {
+                                timeout(time: 2, unit: "MINUTES")
+                        }
+                        steps {
+                                sh 'printf "\\e[31mexecuting step2\\e[0m\\n"'
+                        }
+                }
+        }
 }
