@@ -1,8 +1,8 @@
 node {
         stage("stage1") {
-               echo "testing echo"
+               echo "testing satge1"
         }
         stage("stage2") {
-                echo "1"
+                echo "testing stage2"
         }
 }
